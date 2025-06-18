@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Kosnica;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,9 @@ class KosnicaFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'oznaka' => $this->faker->bothify('KSN-###'),
+            'tip' => $this->faker->randomElement(['Langstroth', 'Dadant', 'Top-Bar', 'Warre']),
+            'status' => $this->faker->randomElement(Kosnica::$status),
         ];
     }
 }

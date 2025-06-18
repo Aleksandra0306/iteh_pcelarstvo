@@ -17,7 +17,8 @@ class SugestijaFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'poruka' => $this->faker->sentence(),
+            'datum_kreiranja' => $this->faker->dateTimeBetween('-6 months', 'now'),
         ];
     }
 }

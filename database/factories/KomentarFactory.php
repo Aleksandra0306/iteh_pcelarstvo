@@ -17,7 +17,8 @@ class KomentarFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'sadrzaj' => $this->faker->paragraph,
+            'datum' => $this->faker->dateTimeBetween('-1 year', 'now'),
         ];
     }
 }

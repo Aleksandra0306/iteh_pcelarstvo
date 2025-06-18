@@ -17,7 +17,8 @@ class PcelinjakFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'naziv' => $this->faker->company(),
+            'lokacija' => $this->faker->address()
         ];
     }
 }

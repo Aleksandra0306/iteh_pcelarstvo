@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Drustvo;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,9 @@ class DrustvoFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'matica_starost' => $this->faker->numberBetween(1, 5), 
+            'jacina' => $this->faker->randomElement(Drustvo::$jacina), 
+            'datum_formiranja' => $this->faker->dateTimeBetween('-2 years', 'now')->format('Y-m-d'),
         ];
     }
 }
