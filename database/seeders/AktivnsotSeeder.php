@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Aktivnost;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class AktivnsotSeeder extends Seeder
 {
@@ -12,6 +13,15 @@ class AktivnsotSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $users=\App\Models\User::all();
+        $drustva=\App\Models\Drustvo::all();
+
+        foreach($drustva as $drustvo){
+            Aktivnost::factory(1)->create([
+                'drustvo_id'=>$drustvo->id,
+                'user_id' => $users->random()->id
+            ]);
+        }
+
     }
 }

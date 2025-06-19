@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Kosnica;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class KosnicaSeeder extends Seeder
 {
@@ -12,6 +13,13 @@ class KosnicaSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $pcelinjaci=\App\Models\Pcelinjak::all();
+
+        foreach($pcelinjaci as $pcelinjak){
+            Kosnica::factory(4)->create([
+                'pcelinjak_id'=>$pcelinjak->id
+            ]);
+        }
+
     }
 }
