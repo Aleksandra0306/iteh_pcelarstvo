@@ -14,6 +14,13 @@ class DrustvoResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'kosnica' => new KosnicaResource($this->whenLoaded('kosnica')),
+            'matica_starost' => $this->matica_starost,
+            'jacina' => $this->jacina,
+            'datum_formiranja' => $this->datum_formiranja,
+            'aktivnosts' => AktivnostResource::collection($this->whenLoaded('aktivnosts'))
+        ];
     }
 }

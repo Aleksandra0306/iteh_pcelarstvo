@@ -14,6 +14,12 @@ class PcelinjakResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+         return [
+            'id' => $this->id,
+            'naziv' => $this->naziv,
+            'lokacija' => $this->lokacija,
+            'user' => new UserResource($this->whenLoaded('user')),
+            'kosnicas'=>KosnicaResource::collection($this->whenLoaded('kosnicas'))
+        ];
     }
 }

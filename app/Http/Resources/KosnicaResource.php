@@ -14,6 +14,13 @@ class KosnicaResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'oznaka' => $this->oznaka,
+            'tip' => $this->tip,
+            'status' => $this->status,
+            'pcelinjak' => new PcelinjakResource($this->whenLoaded('pcelinjak')),
+            'drustvos' => DrustvoResource::collection($this->whenLoaded('drustvos'))
+        ];
     }
 }
