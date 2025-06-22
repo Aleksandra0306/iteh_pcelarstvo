@@ -21,7 +21,7 @@ class SugestijaPolicy
      */
     public function view(User $user, Sugestija $sugestija): bool
     {
-        return false;
+        return $user->id === $sugestija->user_id;
     }
 
     /**
@@ -29,7 +29,7 @@ class SugestijaPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class SugestijaPolicy
      */
     public function update(User $user, Sugestija $sugestija): bool
     {
-        return false;
+        return $user->id === $sugestija->user_id;
     }
 
     /**
@@ -45,7 +45,7 @@ class SugestijaPolicy
      */
     public function delete(User $user, Sugestija $sugestija): bool
     {
-        return false;
+        return $user->id === $sugestija->user_id;
     }
 
     /**

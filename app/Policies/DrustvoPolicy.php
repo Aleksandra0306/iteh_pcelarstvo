@@ -11,17 +11,17 @@ class DrustvoPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
-    {
-        return false;
-    }
+    // public function viewAny(User $user): bool
+    // {
+    //     return false;
+    // }
 
     /**
      * Determine whether the user can view the model.
      */
     public function view(User $user, Drustvo $drustvo): bool
     {
-        return false;
+        return $user->id === $drustvo->kosnica->pcelinjak->user_id;
     }
 
     /**
@@ -29,7 +29,7 @@ class DrustvoPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class DrustvoPolicy
      */
     public function update(User $user, Drustvo $drustvo): bool
     {
-        return false;
+        return $user->id === $drustvo->kosnica->pcelinjak->user_id;
     }
 
     /**
@@ -45,7 +45,7 @@ class DrustvoPolicy
      */
     public function delete(User $user, Drustvo $drustvo): bool
     {
-        return false;
+        return $user->id === $drustvo->kosnica->pcelinjak->user_id;
     }
 
     /**

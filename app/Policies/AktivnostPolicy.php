@@ -11,17 +11,17 @@ class AktivnostPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
-    {
-        return false;
-    }
+    // public function viewAny(User $user): bool
+    // {
+    //     return true;
+    // }
 
     /**
      * Determine whether the user can view the model.
      */
     public function view(User $user, Aktivnost $aktivnost): bool
     {
-        return false;
+        return $user->id === $aktivnost->user_id;
     }
 
     /**
@@ -29,7 +29,7 @@ class AktivnostPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class AktivnostPolicy
      */
     public function update(User $user, Aktivnost $aktivnost): bool
     {
-        return false;
+        return $user->id === $aktivnost->user_id;
     }
 
     /**
@@ -45,7 +45,7 @@ class AktivnostPolicy
      */
     public function delete(User $user, Aktivnost $aktivnost): bool
     {
-        return false;
+        return $user->id === $aktivnost->user_id;
     }
 
     /**
@@ -56,11 +56,4 @@ class AktivnostPolicy
         return false;
     }
 
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Aktivnost $aktivnost): bool
-    {
-        return false;
-    }
 }

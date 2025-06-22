@@ -11,17 +11,17 @@ class PcelinjakPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
-    {
-        return false;
-    }
+    // public function viewAny(User $user): bool
+    // {
+    //     return true;
+    // }
 
     /**
      * Determine whether the user can view the model.
      */
     public function view(User $user, Pcelinjak $pcelinjak): bool
     {
-        return false;
+        return $pcelinjak->user_id === $user->id;
     }
 
     /**
@@ -29,7 +29,7 @@ class PcelinjakPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class PcelinjakPolicy
      */
     public function update(User $user, Pcelinjak $pcelinjak): bool
     {
-        return false;
+        return $pcelinjak->user_id === $user->id;
     }
 
     /**
@@ -45,22 +45,22 @@ class PcelinjakPolicy
      */
     public function delete(User $user, Pcelinjak $pcelinjak): bool
     {
-        return false;
+        return $pcelinjak->user_id === $user->id;
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Pcelinjak $pcelinjak): bool
-    {
-        return false;
-    }
+    // public function restore(User $user, Pcelinjak $pcelinjak): bool
+    // {
+    //     return false;
+    // }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Pcelinjak $pcelinjak): bool
-    {
-        return false;
-    }
+    // public function forceDelete(User $user, Pcelinjak $pcelinjak): bool
+    // {
+    //     return false;
+    // }
 }

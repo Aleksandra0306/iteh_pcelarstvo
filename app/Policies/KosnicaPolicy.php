@@ -21,7 +21,7 @@ class KosnicaPolicy
      */
     public function view(User $user, Kosnica $kosnica): bool
     {
-        return false;
+        return $user->id === $kosnica->pcelinjak->user_id;
     }
 
     /**
@@ -29,7 +29,7 @@ class KosnicaPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class KosnicaPolicy
      */
     public function update(User $user, Kosnica $kosnica): bool
     {
-        return false;
+        return $user->id === $kosnica->pcelinjak->user_id;
     }
 
     /**
@@ -45,7 +45,7 @@ class KosnicaPolicy
      */
     public function delete(User $user, Kosnica $kosnica): bool
     {
-        return false;
+        return $user->id === $kosnica->pcelinjak->user_id;
     }
 
     /**
