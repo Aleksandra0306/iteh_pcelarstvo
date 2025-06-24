@@ -21,8 +21,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('sugestije', SugestijaController::class);
     Route::apiResource('user', UserController::class);
     Route::post('/logout', [AuthController::class, 'logout']);
-    //Route::post('/notifikacije/{id}', [NotifikacijaController::class, 'read']);
-    //Route::get('/notifikacije', [NotifikacijaController::class, 'showAll']);
+    Route::post('/notifikacije/{id}', [NotifikacijaController::class, 'read']);
+    Route::get('/notifikacije', [NotifikacijaController::class, 'showAll']);
 });
 
 Route::get('/proizvodi', function () {
