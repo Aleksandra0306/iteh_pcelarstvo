@@ -18,8 +18,8 @@ class DrustvoController extends Controller
     public function index()
     { //drustvo-kosnica-pcelinjak-user
         $user = Auth::user();
-        $drustva = Drustvo::with('kosnice')
-            ->whereHas('kosnice.pcelinjak', function ($query) use ($user) {
+        $drustva = Drustvo::with('kosnica')
+            ->whereHas('kosnica.pcelinjak', function ($query) use ($user) {
                 $query->where('user_id', $user->id);
             })
             ->latest()
