@@ -9,41 +9,51 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Builder;
 
-class Aktivnost extends Model 
+class Aktivnost extends Model
 {
-    use HasFactory; 
+    use HasFactory;
     protected $fillable = ['naziv', 'opis', 'tip', 'pocetak', 'kraj', 'status', 'drustvo_id', 'user_id', 'notifikacija_poslata'];
-    public static $tip=['SEZONSKA','NESEZONSKA'];
-    public static $status=['PLANIRANA', 'U TOKU', 'ZAVRSENA'];
+    public static $tip = ['SEZONSKA', 'NESEZONSKA'];
+    public static $status = ['PLANIRANA', 'U TOKU', 'ZAVRSENA'];
 
     public function drustvo(): BelongsTo
     {
         return $this->belongsTo(Drustvo::class);
     }
 
-    public function komentars():HasMany{
+    public function komentars(): HasMany
+    {
         return $this->hasMany(Komentar::class);
     }
 
-    public function user():BelongsTo{
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function sugestijas():HasMany{
+    public function sugestijas(): HasMany
+    {
         return $this->hasMany(Sugestija::class);
     }
 
-    public function scopeFilter(Builder|QueryBuilder $query, array $filteri, User $user): Builder|QueryBuilder{
+    public function scopeFilter(Builder|QueryBuilder $query, array $filteri, User $user): Builder|QueryBuilder
+    {
         return $query
-        ->where('user_id', $user->id)
-        ->when($filteri['pocetak'] ?? null, function ($query, $pocetak){
-            $query->whereMonth('pocetak', $pocetak);
-        })->when($filteri['tip'] ?? null, function ($query, $tip){
-            $query->where('tip', $tip);
-        })->when($filteri['status'] ?? null, function ($query, $status){
-            $query->where('status', $status);
-        })->when($filteri['drustvo'] ?? null, function ($query, $drustvo){
-            $query->where('drustvo_id', $drustvo);
-        });
+            ->where('user_id', $user->id)
+            ->when($filteri['pocetak'] ?? null, function ($query, $pocetak) {
+                $query->whereMonth('pocetak', $pocetak);
+            })->when($filteri['tip'] ?? null, function ($query, $tip) {
+                $query->where('tip', $tip);
+            })->when($filteri['status'] ?? null, function ($query, $status) {
+                $query->where('status', $status);
+            })->when($filteri['drustvo'] ?? null, function ($query, $drustvo) {
+                $query->where('drustvo_id', $drustvo);
+            });
     }
+
+    //primer za filtriranje SELECT * FROM aktivnosti WHERE user_id = 1
+    // AND MONTH(pocetak) = 7
+    //AND tip = 'SEZONSKA'
+    // AND status = 'U TOKU'
+    //AND drustvo_id = 3       ovo bi bilo filtriranje ako smo poslali $filteri = [ 'pocetak' => 7,'tip' => 'SEZONSKA', 'status' => 'U TOKU',  'drustvo' => 3];
 }
