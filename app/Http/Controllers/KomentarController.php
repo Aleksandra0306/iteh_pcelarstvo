@@ -18,7 +18,10 @@ class KomentarController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $komentari = Komentar::with('user')->where('user_id', $user->id);
+        $komentari = Komentar::with('user'); //->where('user_id', $user->id);
+        if ($user->role !== 'admin') {
+            $komentari->where('user_id', $user->id);
+        }
         return KomentarResource::collection($komentari->latest()->paginate());
     }
 
@@ -61,18 +64,17 @@ class KomentarController extends Controller
      */
     public function destroy(Komentar $komentari)
     {
-            if (Gate::allows('delete', $komentari)) {
-                $komentari->delete();
+        if (Gate::allows('delete', $komentari)) {
+            $komentari->delete();
 
-                return response()->json([
-                    'message' => 'Komentar uspešno obrisan.',
-                ]);
-            } else {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'Nemate dozvolu da obrišete ovaj komentar.',
-                ], 403);
-            }
-        
+            return response()->json([
+                'message' => 'Komentar uspešno obrisan.',
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Nemate dozvolu da obrišete ovaj komentar.',
+            ], 403);
+        }
     }
 }

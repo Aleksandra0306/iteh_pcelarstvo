@@ -38,18 +38,4 @@ class Kosnica extends Model
                 $query->where('pcelinjak_id', $pcelinjak);
             });
     }
-
-    // primer za filtriranje:
-// SELECT * FROM kosnice
-// // WHERE EXISTS (SELECT * FROM pcelinjaci WHERE pcelinjaci.id = aktivnosti.pcelinjak_id AND pcelinjaci.user_id = 1)
-// AND tip LIKE '%SEZONSKA%'
-// AND status = 'U TOKU'
-// AND pcelinjak_id = 3
-
-    // Ovo bi bilo filtriranje ako smo poslali:
-// $filteri = [
-//     'tip' => 'SEZONSKA',
-//     'status' => 'U TOKU',
-//     'pcelinjak' => 3
-// ];
 }

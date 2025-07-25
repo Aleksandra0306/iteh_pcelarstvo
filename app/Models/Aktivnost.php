@@ -38,8 +38,12 @@ class Aktivnost extends Model
 
     public function scopeFilter(Builder|QueryBuilder $query, array $filteri, User $user): Builder|QueryBuilder
     {
+        if ($user->role !== 'admin') {
+            $query->where('user_id', $user->id);
+        }
+
         return $query
-            ->where('user_id', $user->id)
+            //->where('user_id', $user->id)
             ->when($filteri['pocetak'] ?? null, function ($query, $pocetak) {
                 $query->whereMonth('pocetak', $pocetak);
             })->when($filteri['tip'] ?? null, function ($query, $tip) {
@@ -50,10 +54,4 @@ class Aktivnost extends Model
                 $query->where('drustvo_id', $drustvo);
             });
     }
-
-    //primer za filtriranje SELECT * FROM aktivnosti WHERE user_id = 1
-    // AND MONTH(pocetak) = 7
-    //AND tip = 'SEZONSKA'
-    // AND status = 'U TOKU'
-    //AND drustvo_id = 3       ovo bi bilo filtriranje ako smo poslali $filteri = [ 'pocetak' => 7,'tip' => 'SEZONSKA', 'status' => 'U TOKU',  'drustvo' => 3];
 }

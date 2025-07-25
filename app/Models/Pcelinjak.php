@@ -12,33 +12,21 @@ use Illuminate\Database\Eloquent\Builder;
 class Pcelinjak extends Model
 {
     use HasFactory;
-    protected $fillable = ['naziv', 'lokacija', 'user_id'];
+    protected $fillable=['naziv', 'lokacija', 'user_id'];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function kosnicas(): HasMany
-    {
+    public function kosnicas():HasMany{
         return $this->hasMany(Kosnica::class);
     }
 
-    public function scopeFilter(Builder|QueryBuilder $query, array $filteri, User $user): Builder|QueryBuilder
-    {
+    public function scopeFilter(Builder|QueryBuilder $query, array $filteri, User $user): Builder|QueryBuilder{
         return $query->where('user_id', $user->id)
-            ->when($filteri['lokacija'] ?? null, function ($query, $lokacija) {
-                $query->where('lokacija', $lokacija);
-            });
+        ->when($filteri['lokacija'] ?? null, function ($query, $lokacija){
+            $query->where('lokacija', $lokacija);
+        });
     }
-
-    // primer za filtriranje:
-// SELECT * FROM pcelinjaci
-// WHERE user_id = 1
-// AND lokacija = 'Novi Sad'
-
-    // Ovo bi bilo filtriranje ako smo poslali:
-// $filteri = [
-//     'lokacija' => 'Novi Sad'
-// ];
 }

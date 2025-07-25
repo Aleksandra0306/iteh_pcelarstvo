@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\DrustvoController;
 use App\Http\Controllers\KosnicaController;
 use App\Http\Controllers\KomentarController;
 use App\Http\Controllers\AktivnostController;
+use App\Http\Controllers\KomentarDownload;
 use App\Http\Controllers\PcelinjakController;
 use App\Http\Controllers\SugestijaController;
 use App\Http\Controllers\NotifikacijaController;
@@ -23,16 +25,21 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/notifikacije/{id}', [NotifikacijaController::class, 'read']);
     Route::get('/notifikacije', [NotifikacijaController::class, 'showAll']);
+    Route::get('/download/{id}',[KomentarDownload::class, 'generateKomentarDoc']);
+    Route::post('/createActivities', [AdminController::class,'createActivities']);
+    Route::post('/createSuggestion/{id}', [AdminController::class,'createSuggestion']);
+
+    
 });
 
-Route::get('/proizvodi', function () {
-    $response = Http::get('https://dummyjson.com/products');
+Route::get('/zanimljivosti', function () {
+    $response = Http::get('https://dummyjson.com/quotes');
 
-    $proizvodi = collect($response->json()['products'])->map(function ($p) {
+    $proizvodi = collect($response->json()['quotes'])->map(function ($p) {
         return [
-            'naziv' => $p['title'],
-            'cena' => $p['price'],
-            'kategorija' => $p['category'],
+            'id' => $p['id'],
+            'quote' => $p['quote'],
+            'author' => $p['author'],
         ];
     });
 
@@ -41,4 +48,3 @@ Route::get('/proizvodi', function () {
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
-

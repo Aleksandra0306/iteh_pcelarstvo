@@ -21,7 +21,7 @@ class SugestijaPolicy
      */
     public function view(User $user, Sugestija $sugestija): bool
     {
-        return $user->id === $sugestija->user_id;
+        return $user->id === $sugestija->user_id || $user->role==='admin';
     }
 
     /**

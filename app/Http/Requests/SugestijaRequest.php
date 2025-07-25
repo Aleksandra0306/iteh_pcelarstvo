@@ -36,6 +36,7 @@ class SugestijaRequest extends FormRequest
             'poruka' => 'required|string',
             'datum_kreiranja' => 'required|date',
             'aktivnost_id' => 'required|exists:aktivnosts,id',
+            'user_id' => 'nullable|exists:users,id'
         ];
     }
 

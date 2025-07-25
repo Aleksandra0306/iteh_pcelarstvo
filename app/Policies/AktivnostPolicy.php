@@ -21,7 +21,7 @@ class AktivnostPolicy
      */
     public function view(User $user, Aktivnost $aktivnost): bool
     {
-        return $user->id === $aktivnost->user_id;
+        return $user->id === $aktivnost->user_id || $user->role==='admin';
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\Notifikacija;
+use App\Models\Notifications\Notifikacija;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 

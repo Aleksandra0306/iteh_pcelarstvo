@@ -16,7 +16,7 @@ class KomentarRequest extends FormRequest
         if ($this->isMethod('post')) {
             return $this->user()->can('create', Komentar::class);
         }
-        
+
         if ($this->isMethod('put') || $this->isMethod('patch')) {
             $model = $this->route('komentar');
             return $model && $this->user()->can('update', $model);

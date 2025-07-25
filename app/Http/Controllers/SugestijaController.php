@@ -17,8 +17,13 @@ class SugestijaController extends Controller
      */
     public function index()
     {
-        $user=Auth::user();
-        $sugestije=Sugestija::where('user_id',$user->id);
+        $user = Auth::user();
+        //$sugestije=Sugestija::where('user_id',$user->id);
+        $sugestije = Sugestija::with('user');
+        if ($user->role !== 'admin') {
+            $sugestije->where('user_id', $user->id);
+        }
+
         return SugestijaResource::collection($sugestije->latest()->paginate());
     }
 
@@ -60,7 +65,7 @@ class SugestijaController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Sugestija $sugestije)
-{
+    {
         if (Gate::allows('delete', $sugestije)) {
             $sugestije->delete();
 
@@ -73,7 +78,5 @@ class SugestijaController extends Controller
                 'message' => 'Nemate dozvolu da obrišete ovu sugestiju.',
             ], 403);
         }
-    
-}
-
+    }
 }
