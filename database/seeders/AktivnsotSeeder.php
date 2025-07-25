@@ -13,7 +13,7 @@ class AktivnsotSeeder extends Seeder
      */
     public function run(): void
     {
-        $users=\App\Models\User::all();
+        $users=\App\Models\User::where('role','pcelar')->get();
         $drustva=\App\Models\Drustvo::all();
 
         foreach($drustva as $drustvo){

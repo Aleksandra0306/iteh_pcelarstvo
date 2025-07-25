@@ -14,13 +14,12 @@ class PcelinjakSeeder extends Seeder
     public function run(): void
     {
 
-        $users = \App\Models\User::all();
-        
-        foreach($users as $user){
+        $users = \App\Models\User::where('role', 'pcelar')->get();
+
+        foreach ($users as $user) {
             Pcelinjak::factory(1)->create([
-                'user_id'=>$user->id
+                'user_id' => $user->id
             ]);
         }
-
     }
 }

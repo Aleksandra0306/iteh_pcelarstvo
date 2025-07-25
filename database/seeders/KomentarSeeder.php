@@ -13,16 +13,15 @@ class KomentarSeeder extends Seeder
      */
     public function run(): void
     {
-        $aktivnosti=\App\Models\Aktivnost::all();
-        $users=\App\Models\User::all();
+        $aktivnosti = \App\Models\Aktivnost::all();
+        $users = \App\Models\User::where('role', 'pcelar')->get();
 
-        foreach($aktivnosti as $aktivnost){
+
+        foreach ($aktivnosti as $aktivnost) {
             Komentar::factory(2)->create([
                 'user_id' => $users->random()->id,
-                'aktivnost_id'=>$aktivnost->id
+                'aktivnost_id' => $aktivnost->id
             ]);
         }
-
-
     }
 }

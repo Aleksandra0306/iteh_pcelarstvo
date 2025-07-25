@@ -13,15 +13,14 @@ class SugestijaSeeder extends Seeder
      */
     public function run(): void
     {
-        $users=\App\Models\User::all();
-        $aktivnosti=\App\Models\Aktivnost::all();
+        $users = \App\Models\User::where('role', 'pcelar')->get();
+        $aktivnosti = \App\Models\Aktivnost::all();
 
-         foreach($aktivnosti as $aktivnost){
+        foreach ($aktivnosti as $aktivnost) {
             Sugestija::factory(2)->create([
                 'user_id' => $users->random()->id,
-                'aktivnost_id'=>$aktivnost->id
+                'aktivnost_id' => $aktivnost->id
             ]);
         }
-
     }
 }
