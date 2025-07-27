@@ -20,7 +20,10 @@ class DrustvoController extends Controller
         $user = Auth::user();
         $drustva = Drustvo::with('kosnica')
             ->whereHas('kosnica.pcelinjak', function ($query) use ($user) {
-                $query->where('user_id', $user->id);
+                if ($user->role !== 'admin') {
+                    $query->where('user_id', $user->id);
+                }
+
             })
             ->latest()
             ->paginate();
@@ -47,20 +50,20 @@ class DrustvoController extends Controller
      */
     public function show(Drustvo $drustva)
     {
-       
-            if (Gate::allows('view', $drustva)) {
-                $drustva->load(['kosnica']);
 
-                return response()->json([
-                    'data' => new DrustvoResource($drustva),
-                ]);
-            } else {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'Nemate dozvolu da pregledate ovo društvo.',
-                ], 403);
-            }
-        
+        if (Gate::allows('view', $drustva)) {
+            $drustva->load(['kosnica']);
+
+            return response()->json([
+                'data' => new DrustvoResource($drustva),
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Nemate dozvolu da pregledate ovo društvo.',
+            ], 403);
+        }
+
     }
 
 
@@ -83,18 +86,18 @@ class DrustvoController extends Controller
      */
     public function destroy(Drustvo $drustva)
     {
-            if (Gate::allows('delete', $drustva)) {
-                $drustva->delete();
+        if (Gate::allows('delete', $drustva)) {
+            $drustva->delete();
 
-                return response()->json([
-                    'message' => 'Društvo uspešno obrisano.',
-                ]);
-            } else {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'Nemate dozvolu da obrišete ovo društvo.',
-                ], 403);
-            }
-       
+            return response()->json([
+                'message' => 'Društvo uspešno obrisano.',
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Nemate dozvolu da obrišete ovo društvo.',
+            ], 403);
+        }
+
     }
 }

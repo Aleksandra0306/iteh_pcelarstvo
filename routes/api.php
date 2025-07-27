@@ -28,10 +28,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/download/{id}',[KomentarDownload::class, 'generateKomentarDoc']);
     Route::post('/createActivities', [AdminController::class,'createActivities']);
     Route::post('/createSuggestion/{id}', [AdminController::class,'createSuggestion']);
-
+    Route::get('/komentari/{id}/preuzmi', [KomentarDownload::class, 'generateKomentarDoc']);
     
 });
-
 Route::get('/zanimljivosti', function () {
     $response = Http::get('https://dummyjson.com/quotes');
 
@@ -45,6 +44,5 @@ Route::get('/zanimljivosti', function () {
 
     return response()->json($proizvodi);
 });
-
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);

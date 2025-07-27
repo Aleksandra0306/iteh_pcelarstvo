@@ -13,9 +13,6 @@ use Illuminate\Auth\Access\AuthorizationException;
 
 class AktivnostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $user = Auth::user();
@@ -26,10 +23,6 @@ class AktivnostController extends Controller
             ->paginate();
         return AktivnostResource::collection($aktivnosti);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(AktivnostRequest $request)
     {
         $user = Auth::user();
@@ -45,9 +38,6 @@ class AktivnostController extends Controller
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Aktivnost $aktivnosti)
     {
 
@@ -62,9 +52,6 @@ class AktivnostController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(AktivnostRequest $request, Aktivnost $aktivnosti)
     {
 
@@ -76,10 +63,6 @@ class AktivnostController extends Controller
             'model' => new AktivnostResource($aktivnosti)
         ]);
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Aktivnost $aktivnosti)
     {
 

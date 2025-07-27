@@ -34,6 +34,7 @@ class AuthController extends Controller
             'token' => $token,
             'name' => $user->name,
             'email' => $user->email,
+            'role' => $user->role, // Assuming 'role' is a field in the User model
         ]);
     }
 
@@ -51,7 +52,8 @@ class AuthController extends Controller
         $validatedUser = $request->validate([
             'name' => 'required|string|max:20',
             'email' => 'required|email|unique:users',
-            'password' => 'required|string|min:8'
+            'password' => 'required|string|min:8',
+            'role' => 'required|in:admin,pcelar',
         ]);
         $user = User::create($validatedUser);
         return response()->json([

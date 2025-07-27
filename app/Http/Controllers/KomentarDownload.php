@@ -12,12 +12,10 @@ use PhpOffice\PhpWord\TemplateProcessor;
 
 class KomentarDownload extends Controller
 {
-
     public function pogled()
     {
         return view('components.button');
     }
-
     public function generateKomentarDoc($id)
     {
         $komentar = Komentar::with(['user'])->findOrFail($id);
@@ -25,28 +23,22 @@ class KomentarDownload extends Controller
         $phpWord = new PhpWord();
         $section = $phpWord->addSection();
 
-        // Datum
         $section->addText('Datum: ' . $komentar->datum, [
             'name' => 'Arial',
             'size' => 12,
         ]);
         $section->addTextBreak(1);
 
-        // Ime
         $section->addText('Autor: ' . $komentar->user->name, [
             'name' => 'Arial',
             'size' => 12,
             'bold' => true,
         ]);
         $section->addTextBreak(1);
-
-        // Sadržaj komentara
         $section->addText($komentar->sadrzaj, [
             'name' => 'Arial',
             'size' => 12,
         ]);
-
-        // Snimanje dokumenta
         $filename = 'Komentar_' . $komentar->id . '.docx';
         $filepath = storage_path($filename);
         $phpWord->save($filepath);
